@@ -104,6 +104,14 @@ const startGame = () => {
   answer4.setAttribute("class", "list-group-item answer");
   answer4.setAttribute("id", "answer4");
   cList.appendChild(answer4);
+  let answerEls = document.querySelectorAll(".answer")
+  for (let i=0; i<answerEls.length;i++) {
+    let answerEl = answerEls[i];
+    answerEl.addEventListener("click", function() {
+      let guess = answerEl.innerHTML;
+      checkAnswer(guess);
+    })
+  };
   loadQuestion();
 }
 
@@ -117,14 +125,7 @@ const loadQuestion = () => {
   document.querySelector("#answer2").innerHTML = currentQuestionArray[1];
   document.querySelector("#answer3").innerHTML = currentQuestionArray[2];
   document.querySelector("#answer4").innerHTML = currentQuestionArray[3];
-  let answerEls = document.querySelectorAll(".answer")
-  for (let i=0; i<answerEls.length;i++) {
-    let answerEl = answerEls[i];
-    answerEl.addEventListener("click", function() {
-      let guess = answerEl.innerHTML;
-      checkAnswer(guess);
-    })
-  };
+
 };
 
 const checkAnswer = (guess) => {
@@ -138,12 +139,4 @@ const checkAnswer = (guess) => {
     console.log("you are incorrect");
     loadQuestion();
   }
-}
-
-const correctGuess = () => {
-
-}
-
-const wrongGuess = () => {
-
 }
