@@ -87,11 +87,8 @@ const maleSuperHeroes = [
 
 const gameplay = document.querySelector("#gameplay");
 
-let counter = 0;
-let playerScore = 0;
-let timer = 150;
-let currentAnswer = "";
-let intervalId = 0;
+let counter, playerScore, timer, intervalId, currentAnswer;
+let questionArray = [];
 
 const pageLoad = () => {
   counter = 0;
@@ -99,15 +96,27 @@ const pageLoad = () => {
   timer = 150;
   currentAnswer = "";
   intervalId = 0;
-  let startButton = document.createElement("button");
-  startButton.setAttribute("class", "btn btn-lg btn-dark m-5");
-  startButton.setAttribute("type", "button");
-  startButton.setAttribute("id", "startButton");
-  startButton.innerHTML = "Start Quiz"
-  gameplay.appendChild(startButton);
-  document.getElementById("startButton").addEventListener("click", function () {
-    startGame();
-  });
+  questionArray = [];
+  let fStartButton = document.createElement("button");
+  fStartButton.setAttribute("class", "btn btn-lg btn-dark m-3 sBtn");
+  fStartButton.setAttribute("type", "button");
+  fStartButton.setAttribute("id", "fStartButton");
+  fStartButton.innerHTML = "Female Heroes"
+  gameplay.appendChild(fStartButton);
+  let mStartButton = document.createElement("button");
+  mStartButton.setAttribute("class", "btn btn-lg btn-dark m-3 sBtn");
+  mStartButton.setAttribute("type", "button");
+  mStartButton.setAttribute("id", "mStartButton");
+  mStartButton.innerHTML = "Male Heroes"
+  gameplay.appendChild(mStartButton);
+  let btnEls = document.querySelectorAll(".sBtn")
+  for (let i = 0; i < btnEls.length; i++) {
+    let buttonEl = btnEls[i];
+    buttonEl.addEventListener("click", function () {
+      let array = buttonEl.innerHTML;
+      startGame(array);
+    })
+  };
 }
 
 pageLoad();
@@ -125,9 +134,14 @@ const shuffleArray = (array) => {
   return array;
 };
 
-const startGame = () => {
+const startGame = (array) => {
+  if (array === "Female Heroes") {
+    questionArray = questionArray.concat(femaleSuperHeroes);
+  } else if (array === "Male Heroes") {
+    questionArray = questionArray.concat(maleSuperHeroes);
+  }
   shuffleArray(questionArray);
-  gameplay.removeChild(startButton);
+  gameplay.innerHTML = "";
   let qCard = document.createElement("div");
   qCard.setAttribute("class", "card border border-success");
   gameplay.appendChild(qCard);
