@@ -1,46 +1,89 @@
-const questionArray = [
+const femaleSuperHeroes = [
   {
     question: "Who is Kamala Khan?",
     choices: ["Ms. Marvel", "Spider-Woman", "The Mighty Thor", "Ironheart"],
-    answer: "Ms. Marvel",
+    answer: "Ms. Marvel"
   }, {
     question: "Who is Doreen Green?",
     choices: ["Squirrel Girl", "Ms. Marvel", "Spider-Woman", "The Mighty Thor"],
-    answer: "Squirrel Girl",
+    answer: "Squirrel Girl"
   }, {
     question: "Who is Gwen Poole?",
     choices: ["Gwenpool", "Squirrel Girl", "Ms. Marvel", "Spider-Woman"],
-    answer: "Gwenpool",
+    answer: "Gwenpool"
   }, {
     question: "Who is Nadia Van Dyne?",
     choices: ["Wasp", "Gwenpool", "Squirrel Girl", "Ms. Marvel"],
-    answer: "Wasp",
+    answer: "Wasp"
   }, {
     question: "Who is Jennifer Walters?",
     choices: ["She-Hulk", "Wasp", "Gwenpool", "Squirrel Girl"],
-    answer: "She-Hulk",
+    answer: "She-Hulk"
   }, {
     question: "Who is Kate Bishop?",
     choices: ["Hawkeye", "She-Hulk", "Wasp", "Gwenpool"],
-    answer: "Hawkeye",
+    answer: "Hawkeye"
   }, {
     question: "Who is Patsy Walker?",
     choices: ["Hellcat", "Hawkeye", "She-Hulk", "Wasp"],
-    answer: "Hellcat",
+    answer: "Hellcat"
   }, {
     question: "Who is Riri Williams?",
     choices: ["Ironheart", "Hellcat", "Hawkeye", "She-Hulk"],
-    answer: "Ironheart",
+    answer: "Ironheart"
   }, {
-    question: "Who is Jane Foster",
+    question: "Who is Jane Foster?",
     choices: ["The Mighty Thor", "Ironheart", "Hellcat", "Hawkeye"],
-    answer: "The Mighty Thor",
+    answer: "The Mighty Thor"
   }, {
     question: "Who is Jessica Drew?",
     choices: ["Spider-Woman", "The Mighty Thor", "Ironheart", "Hellcat"],
-    answer: "Spider-Woman",
+    answer: "Spider-Woman"
   }
 ];
+const maleSuperHeroes = [
+  {
+    question: "Who is Peter Parker?",
+    choices: ["Spider-Man", "Thor", "Hawkeye", "Gambit"],
+    answer: "Spider-Man"
+  }, {
+    question: "Who is Peter Porker?",
+    choices: ["Spider-Ham", "Spider-Man", "Thor", "Hawkeye"],
+    answer: "Spider-Ham"
+  }, {
+    question: "Who is James Buchanon Barnes?",
+    choices: ["The Winter Soldier", "Spider-Ham", "Spider-Man", "Thor"],
+    answer: "The Winter Soldier"
+  }, {
+    question: "Who is James Rupert Rhodes?",
+    choices: ["War Machine", "The Winter Soldier", "Spider-Ham", "Spider-Man"],
+    answer: "War Machine"
+  }, {
+    question: "Who is Wade Wilson?",
+    choices: ["Deadpool", "War Machine", "The Winter Soldier", "Spider-Ham"],
+    answer: "Deadpool"
+  }, {
+    question: "Who is Scott Summers?",
+    choices: ["Cyclops", "Deadpool", "War Machine", "The Winter Soldier"],
+    answer: "Cyclops"
+  }, {
+    question: "Who is James Howlett?",
+    choices: ["Wolverine", "Cyclops", "Deadpool", "War Machine"],
+    answer: "Wolverine"
+  }, {
+    question: "Who is Remy LeBeau?",
+    choices: ["Gambit", "Wolverine", "Cyclops", "Deadpool"],
+    answer: "Gambit"
+  }, {
+    question: "Who is Clint Barton?",
+    choices: ["Hawkeye", "Gambit", "Wolverine", "Cyclops"],
+    answer: "Hawkeye"
+  }, {
+    question: "Who is Donald Blake?",
+    choices: ["Thor", "Hawkeye", "Gambit", "Wolverine"],
+    answer: "Thor"
+  }
+]
 
 const gameplay = document.querySelector("#gameplay");
 
