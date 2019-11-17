@@ -1,0 +1,14 @@
+.answer:hover {
+	background-color: #555555;
+	color: #dddddd;
+}
+
+.correct {
+	background-color: #008000;
+	color: #dddddd;
+}
+
+.wrong {
+	background-color: #880000;
+	color: #dddddd;
+}

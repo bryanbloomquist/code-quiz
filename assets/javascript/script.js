@@ -41,28 +41,34 @@ const questionArray = [
     answer: "Spider-Woman",
   }
 ];
+
 const gameplay = document.querySelector("#gameplay");
+
 let counter = 0;
 let playerScore = 0;
 let timer = 15;
 let currentAnswer = "";
+let intervalId = 0;
 
 const pageLoad = () => {
+  //create a new button element
   let startButton = document.createElement("button");
+  //add attributes to newly created button
   startButton.setAttribute("class", "btn btn-lg btn-dark m-5");
   startButton.setAttribute("type", "button");
   startButton.setAttribute("id", "startButton");
-  startButton.innerHTML = "start quiz"
+  startButton.innerHTML = "Start Quiz"
+  //append button to the DOM
   gameplay.appendChild(startButton);
+  //add click event to dynamically created button
+  document.getElementById("startButton").addEventListener("click", function () {
+    startGame();
+  });
 }
 
 pageLoad();
 
-document.getElementById("startButton").addEventListener("click", function () {
-  startGame();
-});
-
-//Fisher-Yates algorithm
+//Fisher-Yates shuffle algorithm
 const shuffleArray = (array) => {
   let currentIndex = array.length, tempValue, randomIndex;
   while (0 !== currentIndex) {
@@ -73,18 +79,23 @@ const shuffleArray = (array) => {
     array[randomIndex] = tempValue;
   }
   return array;
-}
+};
 
 const startGame = () => {
+  //suffle question array
   shuffleArray(questionArray);
+  //remove start button from DOM
   gameplay.removeChild(startButton);
+  //create new card div to display the questions and answers
   let qCard = document.createElement("div");
-  qCard.setAttribute("class", "card border border-success m-5");
+  qCard.setAttribute("class", "card border border-success");
   gameplay.appendChild(qCard);
+  //add card heading for the question
   let cHead = document.createElement("div");
-  cHead.setAttribute("class", "card-head");
+  cHead.setAttribute("class", "card-head p-3");
   cHead.setAttribute("id", "question");
   qCard.appendChild(cHead);
+  //create list for the answers
   let cList = document.createElement("ul");
   cList.setAttribute("class", "list-group list-group-flush");
   qCard.appendChild(cList);
@@ -104,10 +115,11 @@ const startGame = () => {
   answer4.setAttribute("class", "list-group-item answer");
   answer4.setAttribute("id", "answer4");
   cList.appendChild(answer4);
+  //add event listeners to answers elements
   let answerEls = document.querySelectorAll(".answer")
-  for (let i=0; i<answerEls.length;i++) {
+  for (let i = 0; i < answerEls.length; i++) {
     let answerEl = answerEls[i];
-    answerEl.addEventListener("click", function() {
+    answerEl.addEventListener("click", function () {
       let guess = answerEl.innerHTML;
       checkAnswer(guess);
     })
@@ -115,8 +127,28 @@ const startGame = () => {
   loadQuestion();
 }
 
+const startTimer = () => {
+  stopTimer();
+  intervalId = setInterval(decrement, 1000);
+};
+
+const decrement = () => {
+  timer--;
+  let clock = document.querySelector("#timer");
+  clock.innerHTML = timer;
+  if (timer === 0) {
+    stopTimer();
+    checkAnswer();
+  }
+};
+
+const stopTimer = () => {
+  clearInterval(intervalId);
+  timer = 15;
+}
+
+//add questions and answers to card element
 const loadQuestion = () => {
-  console.log(counter);
   let currentQuestion = questionArray[counter].question;
   let currentQuestionArray = shuffleArray(questionArray[counter].choices);
   currentAnswer = questionArray[counter].answer;
@@ -125,18 +157,45 @@ const loadQuestion = () => {
   document.querySelector("#answer2").innerHTML = currentQuestionArray[1];
   document.querySelector("#answer3").innerHTML = currentQuestionArray[2];
   document.querySelector("#answer4").innerHTML = currentQuestionArray[3];
-
+  document.querySelector("#timer").innerHTML = timer;
+  startTimer();
 };
 
 const checkAnswer = (guess) => {
   counter++;
-  console.log(guess, currentAnswer);
-  if (guess === currentAnswer){
+  stopTimer();
+  if (timer === 0) {
+    document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center wrong");
+    console.log("you ran out of time");
+    setTimeout(function () {
+      document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
+      checkCounter();
+    }, 1000);
+  } else if (guess === currentAnswer) {
+    document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center correct");
     console.log("you are correct");
-    loadQuestion();
-  }
-  else {
+    setTimeout(function () {
+      document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
+      checkCounter();
+    }, 1000);
+  } else {
+    document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center wrong");
     console.log("you are incorrect");
-    loadQuestion();
+    setTimeout(function () {
+      document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
+      checkCounter();
+    }, 1000);
   }
+}
+
+const checkCounter = () => {
+  if (counter < questionArray.length - 1) {
+    loadQuestion();
+  } else {
+    endGame();
+  }
+};
+
+const endGame = () => {
+  console.log("This is the end of the game, it's not coded yet.")
 }
