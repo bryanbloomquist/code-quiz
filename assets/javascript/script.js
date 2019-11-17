@@ -87,7 +87,7 @@ const maleSuperHeroes = [
 
 const gameplay = document.querySelector("#gameplay");
 
-let counter, playerScore, timer, intervalId, currentAnswer;
+let counter, playerScore, timer, intervalId, currentAnswer, array;
 let questionArray = [];
 
 const pageLoad = () => {
@@ -97,6 +97,7 @@ const pageLoad = () => {
   currentAnswer = "";
   intervalId = 0;
   questionArray = [];
+  array = "";
   let fStartButton = document.createElement("button");
   fStartButton.setAttribute("class", "btn btn-lg btn-dark m-3 sBtn");
   fStartButton.setAttribute("type", "button");
@@ -113,7 +114,7 @@ const pageLoad = () => {
   for (let i = 0; i < btnEls.length; i++) {
     let buttonEl = btnEls[i];
     buttonEl.addEventListener("click", function () {
-      let array = buttonEl.innerHTML;
+      array = buttonEl.innerHTML;
       startGame(array);
     })
   };
@@ -276,6 +277,6 @@ const showHighScore = (initials) => {
   gameplay.innerHTML = "";
   let sessionScore = initials + ': ' + playerScore;
   document.querySelector("#timer").innerHTML = sessionScore;
-  localStorage.setItem( 'score', sessionScore);
+  localStorage.setItem( array, sessionScore);
   pageLoad();
 };
