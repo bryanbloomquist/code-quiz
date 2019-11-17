@@ -179,7 +179,7 @@ const checkAnswer = (guess) => {
 }
 
 const checkCounter = () => {
-  if (counter < questionArray.length - 1) {
+  if (counter < questionArray.length) {
     loadQuestion();
   } else {
     endGame();
@@ -219,4 +219,7 @@ const endGame = () => {
 
 const showHighScore = (initials) => {
   gameplay.innerHTML = "";
-}
+  let sessionScore = '"' + initials + '"' + " " + playerScore;
+  document.querySelector("#timer").innerHTML = sessionScore;
+  localStorage.setItem( 'score', sessionScore);
+};
