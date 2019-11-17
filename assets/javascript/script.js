@@ -46,11 +46,16 @@ const gameplay = document.querySelector("#gameplay");
 
 let counter = 0;
 let playerScore = 0;
-let timer = 15;
+let timer = 150;
 let currentAnswer = "";
 let intervalId = 0;
 
 const pageLoad = () => {
+  counter = 0;
+  playerScore = 0;
+  timer = 150;
+  currentAnswer = "";
+  intervalId = 0;
   let startButton = document.createElement("button");
   startButton.setAttribute("class", "btn btn-lg btn-dark m-5");
   startButton.setAttribute("type", "button");
@@ -115,6 +120,7 @@ const startGame = () => {
     })
   };
   loadQuestion();
+  startTimer();
 }
 
 const startTimer = () => {
@@ -128,13 +134,13 @@ const decrement = () => {
   clock.innerHTML = timer;
   if (timer === 0) {
     stopTimer();
-    checkAnswer();
+    endGame();
   }
 };
 
 const stopTimer = () => {
   clearInterval(intervalId);
-  timer = 15;
+  timer = 150;
 }
 
 //add questions and answers to card element
@@ -148,28 +154,18 @@ const loadQuestion = () => {
   document.querySelector("#answer3").innerHTML = currentQuestionArray[2];
   document.querySelector("#answer4").innerHTML = currentQuestionArray[3];
   document.querySelector("#timer").innerHTML = timer;
-  startTimer();
 };
 
 const checkAnswer = (guess) => {
   counter++;
-  if (timer === 0) {
-    stopTimer();
-    document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center wrong");
-    setTimeout(function () {
-      document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
-      checkCounter();
-    }, 1000);
-  } else if (guess === currentAnswer) {
-    playerScore += timer;
-    stopTimer();
+if (guess === currentAnswer) {
     document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center correct");
     setTimeout(function () {
       document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
       checkCounter();
     }, 1000);
   } else {
-    stopTimer();
+    timer -= 15;
     document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center wrong");
     setTimeout(function () {
       document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
@@ -187,6 +183,8 @@ const checkCounter = () => {
 };
 
 const endGame = () => {
+  playerScore = timer;
+  stopTimer();
   document.querySelector("#timer").innerHTML = "Game Over";
   gameplay.innerHTML = "";
   let setScore = document.createElement("div");
@@ -219,7 +217,8 @@ const endGame = () => {
 
 const showHighScore = (initials) => {
   gameplay.innerHTML = "";
-  let sessionScore = '"' + initials + '"' + " " + playerScore;
+  let sessionScore = initials + ': ' + playerScore;
   document.querySelector("#timer").innerHTML = sessionScore;
   localStorage.setItem( 'score', sessionScore);
+  pageLoad();
 };
