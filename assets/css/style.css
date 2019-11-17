@@ -1,6 +1,15 @@
+body {
+	background-color: #504a4a;
+}
+
 .answer:hover {
-	background-color: hotpink;
-	color: rebeccapurple;
+	background-color: #518cca;
+	color: #ffffff;
+}
+
+.jumbotron {
+	background-color: #000000;
+	color: #ffffff;
 }
 
 .correct {
@@ -14,6 +23,37 @@
 }
 
 #question {
-	background-color: rebeccapurple;
-	color: hotpink;
+	background-color: #f78f3f;
+	color: #ffffff;
+}
+
+.sBtn {
+	background-color: #e23636;
+	border: 3px solid #000000;
+}
+
+.sBtn:hover {
+	background-color: #f78f3f;
+}
+
+.card {
+	border: solid 5px #e23636;
+}
+
+#buttonId {
+	background-color: #e23636;
+	color: #ffffff;
+}
+
+img {
+  width: 100%;
+  border: 2px solid #333333;
+}
+
+.logo {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 75px;
+  margin: 10px;
 }

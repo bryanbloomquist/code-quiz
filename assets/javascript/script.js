@@ -144,7 +144,7 @@ const startGame = (array) => {
   shuffleArray(questionArray);
   gameplay.innerHTML = "";
   let qCard = document.createElement("div");
-  qCard.setAttribute("class", "card border border-success");
+  qCard.setAttribute("class", "card");
   gameplay.appendChild(qCard);
   let cHead = document.createElement("div");
   cHead.setAttribute("class", "card-head p-3");
@@ -217,16 +217,16 @@ const loadQuestion = () => {
 const checkAnswer = (guess) => {
   counter++;
 if (guess === currentAnswer) {
-    document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center correct");
+    document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center correct");
     setTimeout(function () {
-      document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
+      document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center");
       checkCounter();
     }, 1000);
   } else {
     timer -= 15;
-    document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center wrong");
+    document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center wrong");
     setTimeout(function () {
-      document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
+      document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center");
       checkCounter();
     }, 1000);
   }
@@ -257,8 +257,8 @@ const endGame = () => {
   label.setAttribute("type", "text");
   label.setAttribute("class", "form-control");
   label.setAttribute("id", "userInput");
-  label.setAttribute("placeholder", "Enter your initials to view high score.");
-  label.setAttribute("aria-label", "Enter your initials to view high score.");
+  label.setAttribute("placeholder", "Enter your initials to save your score.");
+  label.setAttribute("aria-label", "Enter your initials to save your score.");
   label.setAttribute("aria-describedby", "buttonId");
   input.appendChild(label);
   let button = document.createElement("button");
