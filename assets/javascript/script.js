@@ -51,16 +51,12 @@ let currentAnswer = "";
 let intervalId = 0;
 
 const pageLoad = () => {
-  //create a new button element
   let startButton = document.createElement("button");
-  //add attributes to newly created button
   startButton.setAttribute("class", "btn btn-lg btn-dark m-5");
   startButton.setAttribute("type", "button");
   startButton.setAttribute("id", "startButton");
   startButton.innerHTML = "Start Quiz"
-  //append button to the DOM
   gameplay.appendChild(startButton);
-  //add click event to dynamically created button
   document.getElementById("startButton").addEventListener("click", function () {
     startGame();
   });
@@ -82,20 +78,15 @@ const shuffleArray = (array) => {
 };
 
 const startGame = () => {
-  //suffle question array
   shuffleArray(questionArray);
-  //remove start button from DOM
   gameplay.removeChild(startButton);
-  //create new card div to display the questions and answers
   let qCard = document.createElement("div");
   qCard.setAttribute("class", "card border border-success");
   gameplay.appendChild(qCard);
-  //add card heading for the question
   let cHead = document.createElement("div");
   cHead.setAttribute("class", "card-head p-3");
   cHead.setAttribute("id", "question");
   qCard.appendChild(cHead);
-  //create list for the answers
   let cList = document.createElement("ul");
   cList.setAttribute("class", "list-group list-group-flush");
   qCard.appendChild(cList);
@@ -115,7 +106,6 @@ const startGame = () => {
   answer4.setAttribute("class", "list-group-item answer");
   answer4.setAttribute("id", "answer4");
   cList.appendChild(answer4);
-  //add event listeners to answers elements
   let answerEls = document.querySelectorAll(".answer")
   for (let i = 0; i < answerEls.length; i++) {
     let answerEl = answerEls[i];
@@ -163,24 +153,24 @@ const loadQuestion = () => {
 
 const checkAnswer = (guess) => {
   counter++;
-  stopTimer();
   if (timer === 0) {
+    stopTimer();
     document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center wrong");
-    console.log("you ran out of time");
     setTimeout(function () {
       document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
       checkCounter();
     }, 1000);
   } else if (guess === currentAnswer) {
+    playerScore += timer;
+    stopTimer();
     document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center correct");
-    console.log("you are correct");
     setTimeout(function () {
       document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
       checkCounter();
     }, 1000);
   } else {
+    stopTimer();
     document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center wrong");
-    console.log("you are incorrect");
     setTimeout(function () {
       document.querySelector(".jumbotron").setAttribute("class", "jumbotron border border-secondary text-center");
       checkCounter();
@@ -197,5 +187,36 @@ const checkCounter = () => {
 };
 
 const endGame = () => {
-  console.log("This is the end of the game, it's not coded yet.")
+  document.querySelector("#timer").innerHTML = "Game Over";
+  gameplay.innerHTML = "";
+  let setScore = document.createElement("div");
+  gameplay.appendChild(setScore);
+  let input = document.createElement("div");
+  input.setAttribute("class", "input-group mb-3");
+  setScore.appendChild(input);
+  let group = document.createElement("div");
+  group.setAttribute("class", "input-group-prepend");
+  input.appendChild(group);
+  let label = document.createElement("input");
+  label.setAttribute("type", "text");
+  label.setAttribute("class", "form-control");
+  label.setAttribute("id", "userInput");
+  label.setAttribute("placeholder", "Enter your initials to view high score.");
+  label.setAttribute("aria-label", "Enter your initials to view high score.");
+  label.setAttribute("aria-describedby", "buttonId");
+  input.appendChild(label);
+  let button = document.createElement("button");
+  button.setAttribute("class", "btn btn-outline-secondary");
+  button.setAttribute("type", "button");
+  button.setAttribute("id", "buttonId");
+  button.innerText = "Submit"
+  group.appendChild(button);
+  document.getElementById("buttonId").addEventListener("click", function () {
+    let initials = document.getElementById("userInput")
+    showHighScore(initials.value);
+  });
+};
+
+const showHighScore = (initials) => {
+  gameplay.innerHTML = "";
 }

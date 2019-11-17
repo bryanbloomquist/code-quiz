@@ -1,6 +1,6 @@
 .answer:hover {
-	background-color: #555555;
-	color: #dddddd;
+	background-color: hotpink;
+	color: rebeccapurple;
 }
 
 .correct {
@@ -11,4 +11,9 @@
 .wrong {
 	background-color: #880000;
 	color: #dddddd;
+}
+
+#question {
+	background-color: rebeccapurple;
+	color: hotpink;
 }
