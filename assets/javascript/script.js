@@ -85,39 +85,46 @@ const maleSuperHeroes = [
   }
 ];
 
+//set global variables to be used later
 const gameplay = document.querySelector("#gameplay");
-
-let counter, playerScore, timer, intervalId, currentAnswer, array;
+let counter, playerScore, timer, intervalId, currentAnswer, quizSelected;
 let questionArray = [];
 let highScores = [];
 let storageScores = [];
 
+//initial load of page, also resets game if player decides to play another round
 const pageLoad = () => {
   counter = 0;
-  playerScore = 0;
-  timer = 150;
   currentAnswer = "";
   intervalId = 0;
+  playerScore = 0;
   questionArray = [];
-  array = "";
+  quizSelected = "";
+  timer = 150;
+  //dynamically create button to select playing with the Female Super Hero questions
   let fStartButton = document.createElement("button");
   fStartButton.setAttribute("class", "btn btn-lg btn-dark m-3 sBtn");
   fStartButton.setAttribute("type", "button");
   fStartButton.setAttribute("id", "fStartButton");
   fStartButton.innerHTML = "Female Heroes"
+  //add Female Heroes button to the page
   gameplay.appendChild(fStartButton);
+  //dynamically create button to select playing with the Male Super Hero questions
   let mStartButton = document.createElement("button");
   mStartButton.setAttribute("class", "btn btn-lg btn-dark m-3 sBtn");
   mStartButton.setAttribute("type", "button");
   mStartButton.setAttribute("id", "mStartButton");
   mStartButton.innerHTML = "Male Heroes"
+  //add Male Heroes button to the page
   gameplay.appendChild(mStartButton);
+  //add click event to each button
   let btnEls = document.querySelectorAll(".sBtn")
   for (let i = 0; i < btnEls.length; i++) {
     let buttonEl = btnEls[i];
     buttonEl.addEventListener("click", function () {
-      array = buttonEl.innerHTML;
-      startGame(array);
+      quizSelected = buttonEl.innerHTML;
+      //starts the game
+      startGame(quizSelected);
     })
   };
 }
@@ -137,20 +144,25 @@ const shuffleArray = (array) => {
   return array;
 };
 
-const startGame = (array) => {
-  if (array === "Female Heroes") {
+const startGame = (quizSelected) => {
+  //If Female Heroes is selected, grab High Scores from local storage for Female Hero Quiz
+  if (quizSelected === "Female Heroes") {
     questionArray = questionArray.concat(femaleSuperHeroes);
-  } else if (array === "Male Heroes") {
+  //If Male Heroes is selected, grab High Scores from local storage for Male Hero Quiz
+  } else if (quizSelected === "Male Heroes") {
     questionArray = questionArray.concat(maleSuperHeroes);
   }
-  storageScores = JSON.parse(localStorage.getItem(array));
-  console.log(storageScores);
+  //take string from local storage and convert it to JSON object
+  storageScores = JSON.parse(localStorage.getItem(quizSelected));
+  //if there is local storage data, set it to high scores array
   if (storageScores) {
     highScores = storageScores;
   };
-  console.log(highScores);
+  //shuffle the question array to randomize the question order
   shuffleArray(questionArray);
+  //empty the game play <div>
   gameplay.innerHTML = "";
+  //dynimcally create a Bootstrap Card component to display the questions and add it to the newly emptied game play <div>
   let qCard = document.createElement("div");
   qCard.setAttribute("class", "card");
   gameplay.appendChild(qCard);
@@ -161,6 +173,7 @@ const startGame = (array) => {
   let cList = document.createElement("ul");
   cList.setAttribute("class", "list-group list-group-flush");
   qCard.appendChild(cList);
+  //try to find a way to do these next steps in a for loop in an attempt to keep it DRY
   let answer1 = document.createElement("li");
   answer1.setAttribute("class", "list-group-item answer");
   answer1.setAttribute("id", "answer1");
@@ -177,15 +190,17 @@ const startGame = (array) => {
   answer4.setAttribute("class", "list-group-item answer");
   answer4.setAttribute("id", "answer4");
   cList.appendChild(answer4);
+  //add click event listener on the answer elements
   let answerEls = document.querySelectorAll(".answer")
   for (let i = 0; i < answerEls.length; i++) {
     let answerEl = answerEls[i];
     answerEl.addEventListener("click", function () {
-      let guess = answerEl.innerHTML;
-      checkAnswer(guess);
+      checkAnswer(answerEl.innerHTML);
     })
   };
+  //load the first question
   loadQuestion();
+  //start the countdown timer
   startTimer();
 }
 
@@ -292,6 +307,6 @@ const showHighScore = (name) => {
     return b.score - a.score 
   });
   console.log(highScores);
-  localStorage.setItem(array, JSON.stringify(highScores));
+  localStorage.setItem(quizSelected, JSON.stringify(highScores));
   pageLoad();
 };
