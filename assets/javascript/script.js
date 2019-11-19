@@ -145,7 +145,9 @@ const startGame = (array) => {
   }
   storageScores = JSON.parse(localStorage.getItem(array));
   console.log(storageScores);
-  highScores = storageScores;
+  if (storageScores) {
+    highScores = storageScores;
+  };
   console.log(highScores);
   shuffleArray(questionArray);
   gameplay.innerHTML = "";
@@ -284,18 +286,12 @@ const showHighScore = (name) => {
   gameplay.innerHTML = "";
   let sessionScore = playerScore + " - " + name;
   document.querySelector("#timer").innerHTML = sessionScore;
-  let obj = {};
-  obj
-  highScores.push({"score": playerScore, "name": name});
+  highScores.push({"name": name, "score": playerScore});
   console.log(highScores);
-  highScores.sort(function (a, b) { return b - a });
+  highScores.sort(function (a, b) { 
+    return b.score - a.score 
+  });
   console.log(highScores);
   localStorage.setItem(array, JSON.stringify(highScores));
   pageLoad();
 };
-
-// var nietos = [];
-// var obj = {};
-// obj["01"] = nieto.label;
-// obj["02"] = nieto.value;
-// nietos.push(obj);
