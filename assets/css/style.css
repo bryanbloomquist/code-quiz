@@ -14,6 +14,11 @@ body {
 	color: #ffffff;
 }
 
+.container {
+	padding: 50px;
+	background-color: #000000cc;
+}
+
 .correct {
 	background-color: #008000;
 	color: #dddddd;
@@ -26,14 +31,18 @@ body {
 
 #question {
 	background-color: orange;
-	color: #ffffff;
-	text-shadow: 1px 1px #333333;
+	color: #000000;
+	font-size: 1.5em;
+}
+
+.answer {
+	font-size: 1.2em;
 }
 
 .sBtn {
 	background-color: crimson;
 	border: 3px solid #000000;
-	text-shadow: 2px 2px #333333;
+	font-size: 1.2em;
 }
 
 .sBtn:hover {

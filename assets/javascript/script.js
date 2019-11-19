@@ -1,3 +1,12 @@
+//default layout to add new quizzes later
+// const arrrayname = [
+//   {
+//     question: "?",
+//     choices: ["", "", "", ""],
+//     answer: ""
+//   }
+// ]
+
 const femaleSuperHeroes = [
   {
     question: "Who is Kamala Khan?",
@@ -63,7 +72,7 @@ const maleSuperHeroes = [
     choices: ["Iron Man", "War Machine", "The Winter Soldier", "Ant-Man"],
     answer: "Iron Man"
   }, {
-    question: "Who is Steven Strange?",
+    question: "Who is Stephen Strange?",
     choices: ["Doctor Strange", "Iron Man", "War Machine", "The Winter Soldier"],
     answer: "Doctor Strange"
   }, {
@@ -127,6 +136,49 @@ const xMen = [
     answer: "Beast"
   }
 ];
+const spiderVillains = [
+  {
+    question: "Who is MacDonald Gargan?",
+    choices: ["Scorpion", "Lizard", "Green Goblin", "Kraven the Hunter"],
+    answer: "Scorpion"
+  }, {
+    question: "Who is Quentin Beck?",
+    choices: ["Mysterio", "Scorpion", "Lizard", "Green Goblin"],
+    answer: "Mysterio"
+  }, {
+    question: "Who is Maxwell Dillon?",
+    choices: ["Electro", "Mysterio", "Scorpion", "Lizard"],
+    answer: "Electro"
+  }, {
+    question: "Who is Adrian Toomes?",
+    choices: ["Vulture", "Electro", "Mysterio", "Scorpion"],
+    answer: "Vulture"
+  }, {
+    question: "Who is William Baker?",
+    choices: ["Sandman", "Vulture", "Electro", "Mysterio"],
+    answer: "Sandman"
+  }, {
+    question: "Who is Dr. Otto Octavius?",
+    choices: ["Doctor Octopus", "Sandman", "Vulture", "Electro"],
+    answer: "Doctor Octopus"
+  }, {
+    question: "Who is Aleksei Sytsevich?",
+    choices: ["Rhino", "Doctor Octopus", "Sandman", "Vulture"],
+    answer: "Rhino"
+  }, {
+    question: "Who is Sergei Kravinoff?",
+    choices: ["Kraven the Hunter", "Rhino", "Doctor Octopus", "Sandman"],
+    answer: "Kraven the Hunter"
+  }, {
+    question: "Who is Norman Osborn?",
+    choices: ["Green Goblin", "Kraven the Hunter", "Rhino", "Doctor Octopus"],
+    answer: "Green Goblin"
+  }, {
+    question: "Who is Dr. Curt Connors?",
+    choices: ["Lizard", "Green Goblin", "Kraven the Hunter", "Rhino"],
+    answer: "Lizard"
+  }
+];
 const quizArray = [
   {
     name: "Female Heroes",
@@ -140,6 +192,10 @@ const quizArray = [
     name: "X-Men",
     id: "xMen",
     quiz: xMen
+  }, {
+    name: "Spidey Villains",
+    id: "spiderVillains",
+    quiz: spiderVillains
   }
 ];
 
@@ -184,7 +240,7 @@ const pageLoad = () => {
   //dynamically create a button for each array in quiz array
   for (let i = 0; i < quizArray.length; i++){
     let button = document.createElement("button");
-    setAttributes(button, {"class": "btn btn-lg btn-dark m-3 sBtn", "type": "button", "id": quizArray[i].id});
+    setAttributes(button, {"class": "btn btn-block btn-dark mb-3 sBtn", "type": "button", "id": quizArray[i].id});
     button.innerText = quizArray[i].name;
     gameplay.appendChild(button);
   }
@@ -206,8 +262,13 @@ pageLoad();
 
 const startGame = (quizSelected) => {
   const result = quizArray.find( ({id}) => id === quizSelected );
-  console.log(result.quiz);
   questionArray = result.quiz;
+  //take string from local storage and convert it to JSON object
+  storageScores = JSON.parse(localStorage.getItem(result.id));
+  //if there is local storage data, set it to high scores array
+  if (storageScores) {
+    highScores = storageScores;
+  };
   //shuffle the question array to randomize the question order
   shuffleArray(questionArray);
   //empty the game play <div>
@@ -333,7 +394,7 @@ const endGame = () => {
   inputGroup.setAttribute("class", "input-group-append");
   setScore.appendChild(inputGroup);
   let button = document.createElement("button");
-  setAttributes(button, {"class": "btn btn-outline-secondary", "type": "button", "id": "buttonId"})
+  setAttributes(button, {"class": "btn btn-outline-secondary", "type": "submit", "id": "buttonId"})
   button.innerText = "Submit"
   inputGroup.appendChild(button);
   //add event listener to button to submit user input
@@ -358,7 +419,7 @@ const showHighScore = (name) => {
   //remove any score after 10 because we only want to store the top ten scores
   highScores = highScores.slice(0, 10);
   let scoreBoard = document.createElement("div");
-  scoreBoard.setAttribute("class", "scoreboard");
+  scoreBoard.setAttribute("class", "scoreboard mb-3");
   gameplay.appendChild(scoreBoard);
   for (let i = 0; i < highScores.length; i++) {
     scoreBoard.innerHTML+= "<h4>" + highScores[i].name + " : " + highScores[i].score + "</h4>";
