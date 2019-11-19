@@ -87,7 +87,9 @@ const maleSuperHeroes = [
 
 //set global variables to be used later
 const gameplay = document.querySelector("#gameplay");
+const jumbotron = document.querySelector(".jumbotron");
 let counter, playerScore, timer, intervalId, currentAnswer, quizSelected;
+const topListNum = 10;
 let questionArray = [];
 let highScores = [];
 let storageScores = [];
@@ -148,7 +150,7 @@ const startGame = (quizSelected) => {
   //If Female Heroes is selected, grab High Scores from local storage for Female Hero Quiz
   if (quizSelected === "Female Heroes") {
     questionArray = questionArray.concat(femaleSuperHeroes);
-  //If Male Heroes is selected, grab High Scores from local storage for Male Hero Quiz
+    //If Male Heroes is selected, grab High Scores from local storage for Male Hero Quiz
   } else if (quizSelected === "Male Heroes") {
     questionArray = questionArray.concat(maleSuperHeroes);
   }
@@ -195,6 +197,7 @@ const startGame = (quizSelected) => {
   for (let i = 0; i < answerEls.length; i++) {
     let answerEl = answerEls[i];
     answerEl.addEventListener("click", function () {
+      //when an answer is clicked, run the checkAnswer function to see if it is correct
       checkAnswer(answerEl.innerHTML);
     })
   };
@@ -205,14 +208,18 @@ const startGame = (quizSelected) => {
 }
 
 const startTimer = () => {
+  //if the timer is running, stop and reset it
   stopTimer();
+  // set interval to run decrement every 1000ms (1sec)
   intervalId = setInterval(decrement, 1000);
 };
 
 const decrement = () => {
-  timer--;
   let clock = document.querySelector("#timer");
+  //subtract 1 from timer and write new value on the page
+  timer--;
   clock.innerHTML = timer;
+  //if the timer runs out stop the clock and end game
   if (timer === 0) {
     stopTimer();
     endGame();
@@ -220,15 +227,19 @@ const decrement = () => {
 };
 
 const stopTimer = () => {
+  //clear the interval
   clearInterval(intervalId);
+  //reset the timer to 150
   timer = 150;
 }
 
-//add questions and answers to card element
+//add questions and answers to card element from the next object in question array
 const loadQuestion = () => {
+  //gran the required information from the object and assign them to variables
   let currentQuestion = questionArray[counter].question;
   let currentQuestionArray = shuffleArray(questionArray[counter].choices);
   currentAnswer = questionArray[counter].answer;
+  //take those variables and write them to the page
   document.querySelector("#question").innerHTML = currentQuestion;
   document.querySelector("#answer1").innerHTML = currentQuestionArray[0];
   document.querySelector("#answer2").innerHTML = currentQuestionArray[1];
@@ -238,36 +249,45 @@ const loadQuestion = () => {
 };
 
 const checkAnswer = (guess) => {
+  //add 1 to the counter so the next question in the array will be loaded
   counter++;
+  //if the guess is correct, change the jumbotron to green for 1 second
   if (guess === currentAnswer) {
-    document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center correct");
+    jumbotron.setAttribute("class", "jumbotron text-center correct");
     setTimeout(function () {
-      document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center");
+      jumbotron.setAttribute("class", "jumbotron text-center");
       checkCounter();
     }, 1000);
+    //if the guess is incorrect, change the jumbotron to red for 1 second and also supbtract 15 from the timer/score
   } else {
     timer -= 15;
-    document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center wrong");
+    jumbotron.setAttribute("class", "jumbotron text-center wrong");
     setTimeout(function () {
-      document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center");
+      jumbotron.setAttribute("class", "jumbotron text-center");
       checkCounter();
     }, 1000);
-  }
+  };
 }
 
 const checkCounter = () => {
+  //check to see if there are any more questions left
   if (counter < questionArray.length) {
+    //if there are, load the next question
     loadQuestion();
   } else {
+    //if not, end the game
     endGame();
   }
 };
 
 const endGame = () => {
+  //set the player score to whatever time is remaining in the timer
   playerScore = timer;
   stopTimer();
   document.querySelector("#timer").innerHTML = "Game Over";
+  //empty the game play <div>
   gameplay.innerHTML = "";
+  //create new input field for player to record their score
   let setScore = document.createElement("div");
   gameplay.appendChild(setScore);
   let input = document.createElement("div");
@@ -299,13 +319,37 @@ const endGame = () => {
 
 const showHighScore = (name) => {
   gameplay.innerHTML = "";
-  let sessionScore = playerScore + " - " + name;
+  let sessionScore = name + ": " + playerScore;
   document.querySelector("#timer").innerHTML = sessionScore;
-  highScores.push({"name": name, "score": playerScore});
+  highScores.push({ "name": name, "score": playerScore });
   console.log(highScores);
-  highScores.sort(function (a, b) { 
-    return b.score - a.score 
+  highScores.sort(function (a, b) {
+    return b.score - a.score
   });
+  // let scoreBoard = document.createElement("div");
+  // scoreBoard.setAttribute("class", "row justify-content-center scoreboard");
+  // gameplay.parentNode.parentNode.appendChild(scoreBoard);
+  // if (highScores.length < topListNum) {
+  //   for (let i = 0; i < highScores.length; i++) {
+  //     scoreBoard.innerHTML +=
+  //     "<div class='col-6 text-right'>" +
+  //       "<h4>" + highScores[i].name + ":</h4>" +
+  //     "</div>" +
+  //     "<div class='col-6'>" +
+  //       "<h4>" + highScores[i].score + "</h4>" +
+  //     "</div>"
+  //   }
+  // } else {
+  //   for (let i = 0; i < topListNum; i++) {
+  //     scoreBoard.innerHTML +=
+  //     "<div class='col-6 text-right'>" +
+  //       "<h4>" + highScores[i].name + ":</h4>" +
+  //     "</div>" +
+  //     "<div class='col-6'>" +
+  //       "<h4>" + highScores[i].score + "</h4>" +
+  //     "</div>"
+  //   }
+  // };
   console.log(highScores);
   localStorage.setItem(quizSelected, JSON.stringify(highScores));
   pageLoad();

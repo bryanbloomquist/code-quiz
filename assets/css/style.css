@@ -30,6 +30,7 @@ body {
 .sBtn {
 	background-color: #e23636;
 	border: 3px solid #000000;
+	text-shadow: 2px 2px #333333;
 }
 
 .sBtn:hover {
@@ -43,6 +44,14 @@ body {
 #buttonId {
 	background-color: #e23636;
 	color: #ffffff;
+}
+
+.scoreboard {
+	/* background-color: #f78f3f; */
+	color: #ffffff;
+	text-shadow: 2px 2px #333333;
+	/* border: 5px solid #518cca; */
+	/* padding: 25px; */
 }
 
 img {
