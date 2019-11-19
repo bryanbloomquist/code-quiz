@@ -44,44 +44,102 @@ const femaleSuperHeroes = [
 const maleSuperHeroes = [
   {
     question: "Who is Peter Parker?",
-    choices: ["Spider-Man", "Thor", "Hawkeye", "Gambit"],
+    choices: ["Spider-Man", "Thor", "Hawkeye", "The Incredible Hulk"],
     answer: "Spider-Man"
   }, {
-    question: "Who is Peter Porker?",
-    choices: ["Spider-Ham", "Spider-Man", "Thor", "Hawkeye"],
-    answer: "Spider-Ham"
+    question: "Who is Scott Lang?",
+    choices: ["Ant-Man", "Spider-Man", "Thor", "Hawkeye"],
+    answer: "Ant-Man"
   }, {
     question: "Who is James Buchanon Barnes?",
-    choices: ["The Winter Soldier", "Spider-Ham", "Spider-Man", "Thor"],
+    choices: ["The Winter Soldier", "Ant-Man", "Spider-Man", "Thor"],
     answer: "The Winter Soldier"
   }, {
     question: "Who is James Rupert Rhodes?",
-    choices: ["War Machine", "The Winter Soldier", "Spider-Ham", "Spider-Man"],
+    choices: ["War Machine", "The Winter Soldier", "Ant-Man", "Spider-Man"],
     answer: "War Machine"
   }, {
-    question: "Who is Wade Wilson?",
-    choices: ["Deadpool", "War Machine", "The Winter Soldier", "Spider-Ham"],
-    answer: "Deadpool"
+    question: "Who is Tony Stark?",
+    choices: ["Iron Man", "War Machine", "The Winter Soldier", "Ant-Man"],
+    answer: "Iron Man"
   }, {
-    question: "Who is Scott Summers?",
-    choices: ["Cyclops", "Deadpool", "War Machine", "The Winter Soldier"],
-    answer: "Cyclops"
+    question: "Who is Steven Strange?",
+    choices: ["Doctor Strange", "Iron Man", "War Machine", "The Winter Soldier"],
+    answer: "Doctor Strange"
   }, {
-    question: "Who is James Howlett?",
-    choices: ["Wolverine", "Cyclops", "Deadpool", "War Machine"],
-    answer: "Wolverine"
+    question: "Who is Steve Rogers?",
+    choices: ["Captain America", "Doctor Strange", "Iron Man", "War Machine"],
+    answer: "Captain America"
   }, {
-    question: "Who is Remy LeBeau?",
-    choices: ["Gambit", "Wolverine", "Cyclops", "Deadpool"],
-    answer: "Gambit"
+    question: "Who is David Bruce Banner?",
+    choices: ["The Incredible Hulk", "Captain America", "Doctor Strange", "Iron Man"],
+    answer: "The Incredible Hulk"
   }, {
     question: "Who is Clint Barton?",
-    choices: ["Hawkeye", "Gambit", "Wolverine", "Cyclops"],
+    choices: ["Hawkeye", "The Incredible Hulk", "Captain America", "Doctor Strange"],
     answer: "Hawkeye"
   }, {
     question: "Who is Donald Blake?",
-    choices: ["Thor", "Hawkeye", "Gambit", "Wolverine"],
+    choices: ["Thor", "Hawkeye", "The Incredible Hulk", "Captain America"],
     answer: "Thor"
+  }
+];
+const xMen = [
+  {
+    question: "Who is Remy LeBeau?",
+    choices: ["Gambit", "Beast", "Angel", "Marvel Girl"],
+    answer: "Gambit"
+  }, {
+    question: "Who is Anna Raven?",
+    choices: ["Rogue", "Gambit", "Beast", "Angel"],
+    answer: "Rogue"
+  }, {
+    question: "Who is Scott Summers?",
+    choices: ["Cyclops", "Rogue", "Gambit", "Beast"],
+    answer: "Cyclops"
+  }, {
+    question: "Who is Ororo Munroe?",
+    choices: ["Storm", "Cyclops", "Rogue", "Gambit"],
+    answer: "Storm"
+  }, {
+    question: "Who is James Howlett?",
+    choices: ["Wolverine", "Storm", "Cyclops", "Rogue"],
+    answer: "Wolverine"
+  }, {
+    question: "Who is Kitty Pryde?",
+    choices: ["Shadowcat", "Wolverine", "Storm", "Cyclops"],
+    answer: "Shadowcat"
+  }, {
+    question: "Who is Robert Drake?",
+    choices: ["Iceman", "Shadowcat", "Wolverine", "Storm"],
+    answer: "Iceman"
+  }, {
+    question: "Who is Jean Grey?",
+    choices: ["Marvel Girl", "Iceman", "Shadowcat", "Wolverine"],
+    answer: "Marvel Girl"
+  }, {
+    question: "Who is Warren Worthington III?",
+    choices: ["Angel", "Marvel Girl", "Iceman", "Shadowcat"],
+    answer: "Angel"
+  }, {
+    question: "Who is Hank McCoy?",
+    choices: ["Beast", "Angel", "Marvel Girl", "Iceman"],
+    answer: "Beast"
+  }
+];
+const quizArray = [
+  {
+    name: "Female Heroes",
+    id: "femaleSuperHeroes",
+    quiz: femaleSuperHeroes
+  }, {
+    name: "Male Heroes",
+    id: "maleSuperHeroes",
+    quiz: maleSuperHeroes
+  }, {
+    name: "X-Men",
+    id: "xMen",
+    quiz: xMen
   }
 ];
 
@@ -94,44 +152,12 @@ let questionArray = [];
 let highScores = [];
 let storageScores = [];
 
-//initial load of page, also resets game if player decides to play another round
-const pageLoad = () => {
-  counter = 0;
-  currentAnswer = "";
-  intervalId = 0;
-  playerScore = 0;
-  questionArray = [];
-  quizSelected = "";
-  timer = 150;
-  //dynamically create button to select playing with the Female Super Hero questions
-  let fStartButton = document.createElement("button");
-  fStartButton.setAttribute("class", "btn btn-lg btn-dark m-3 sBtn");
-  fStartButton.setAttribute("type", "button");
-  fStartButton.setAttribute("id", "fStartButton");
-  fStartButton.innerHTML = "Female Heroes"
-  //add Female Heroes button to the page
-  gameplay.appendChild(fStartButton);
-  //dynamically create button to select playing with the Male Super Hero questions
-  let mStartButton = document.createElement("button");
-  mStartButton.setAttribute("class", "btn btn-lg btn-dark m-3 sBtn");
-  mStartButton.setAttribute("type", "button");
-  mStartButton.setAttribute("id", "mStartButton");
-  mStartButton.innerHTML = "Male Heroes"
-  //add Male Heroes button to the page
-  gameplay.appendChild(mStartButton);
-  //add click event to each button
-  let btnEls = document.querySelectorAll(".sBtn")
-  for (let i = 0; i < btnEls.length; i++) {
-    let buttonEl = btnEls[i];
-    buttonEl.addEventListener("click", function () {
-      quizSelected = buttonEl.innerHTML;
-      //starts the game
-      startGame(quizSelected);
-    })
-  };
-}
-
-pageLoad();
+//function to add multiple attributes in one line of setAttribute found at https://stackoverflow.com/a/12274782/10366482
+const setAttributes = (element, attribute) => {
+  for (var key in attribute) {
+    element.setAttribute(key, attribute[key]);
+  }
+};
 
 //Fisher-Yates shuffle algorithm
 const shuffleArray = (array) => {
@@ -146,20 +172,42 @@ const shuffleArray = (array) => {
   return array;
 };
 
-const startGame = (quizSelected) => {
-  //If Female Heroes is selected, grab High Scores from local storage for Female Hero Quiz
-  if (quizSelected === "Female Heroes") {
-    questionArray = questionArray.concat(femaleSuperHeroes);
-    //If Male Heroes is selected, grab High Scores from local storage for Male Hero Quiz
-  } else if (quizSelected === "Male Heroes") {
-    questionArray = questionArray.concat(maleSuperHeroes);
+//initial load of page, also resets game if player decides to play another round
+const pageLoad = () => {
+  counter = 0;
+  currentAnswer = "";
+  intervalId = 0;
+  playerScore = 0;
+  questionArray = [];
+  quizSelected = "";
+  timer = 150;
+  //dynamically create a button for each array in quiz array
+  for (let i = 0; i < quizArray.length; i++){
+    let button = document.createElement("button");
+    setAttributes(button, {"class": "btn btn-lg btn-dark m-3 sBtn", "type": "button", "id": quizArray[i].id});
+    button.innerText = quizArray[i].name;
+    gameplay.appendChild(button);
   }
-  //take string from local storage and convert it to JSON object
-  storageScores = JSON.parse(localStorage.getItem(quizSelected));
-  //if there is local storage data, set it to high scores array
-  if (storageScores) {
-    highScores = storageScores;
+  console.log(quizArray[0].quiz);
+  //add click event to each button
+  let btnEls = document.querySelectorAll(".sBtn")
+  for (let i = 0; i < btnEls.length; i++) {
+    let buttonEl = btnEls[i];
+    buttonEl.addEventListener("click", function () {
+      quizSelected = buttonEl.id;
+      console.log(quizSelected);
+      //starts the game
+      startGame(quizSelected);
+    })
   };
+}
+
+pageLoad();
+
+const startGame = (quizSelected) => {
+  const result = quizArray.find( ({id}) => id === quizSelected );
+  console.log(result.quiz);
+  questionArray = result.quiz;
   //shuffle the question array to randomize the question order
   shuffleArray(questionArray);
   //empty the game play <div>
@@ -169,29 +217,17 @@ const startGame = (quizSelected) => {
   qCard.setAttribute("class", "card");
   gameplay.appendChild(qCard);
   let cHead = document.createElement("div");
-  cHead.setAttribute("class", "card-head p-3");
-  cHead.setAttribute("id", "question");
+  setAttributes(cHead, {"class": "card-head p-3", "id": "question"});
   qCard.appendChild(cHead);
   let cList = document.createElement("ul");
   cList.setAttribute("class", "list-group list-group-flush");
   qCard.appendChild(cList);
-  //try to find a way to do these next steps in a for loop in an attempt to keep it DRY
-  let answer1 = document.createElement("li");
-  answer1.setAttribute("class", "list-group-item answer");
-  answer1.setAttribute("id", "answer1");
-  cList.appendChild(answer1);
-  let answer2 = document.createElement("li");
-  answer2.setAttribute("class", "list-group-item answer");
-  answer2.setAttribute("id", "answer2");
-  cList.appendChild(answer2);
-  let answer3 = document.createElement("li");
-  answer3.setAttribute("class", "list-group-item answer");
-  answer3.setAttribute("id", "answer3");
-  cList.appendChild(answer3);
-  let answer4 = document.createElement("li");
-  answer4.setAttribute("class", "list-group-item answer");
-  answer4.setAttribute("id", "answer4");
-  cList.appendChild(answer4);
+  //create list elements for each possible answer and append to ul
+  for (let i = 0; i < questionArray[0].choices.length; i++) {
+    let answer = document.createElement("li");
+    setAttributes(answer, {"class": "list-group-item answer", "id": "answer"+i});
+    cList.appendChild(answer);
+  };
   //add click event listener on the answer elements
   let answerEls = document.querySelectorAll(".answer")
   for (let i = 0; i < answerEls.length; i++) {
@@ -241,10 +277,9 @@ const loadQuestion = () => {
   currentAnswer = questionArray[counter].answer;
   //take those variables and write them to the page
   document.querySelector("#question").innerHTML = currentQuestion;
-  document.querySelector("#answer1").innerHTML = currentQuestionArray[0];
-  document.querySelector("#answer2").innerHTML = currentQuestionArray[1];
-  document.querySelector("#answer3").innerHTML = currentQuestionArray[2];
-  document.querySelector("#answer4").innerHTML = currentQuestionArray[3];
+  for (let i=0; i<currentQuestionArray.length; i++){
+    document.querySelector("#answer"+i).innerHTML = currentQuestionArray[i];
+  };
   document.querySelector("#timer").innerHTML = timer;
 };
 
@@ -289,67 +324,45 @@ const endGame = () => {
   gameplay.innerHTML = "";
   //create new input field for player to record their score
   let setScore = document.createElement("div");
+  setScore.setAttribute("class", "input-group mb-3");
   gameplay.appendChild(setScore);
-  let input = document.createElement("div");
-  input.setAttribute("class", "input-group mb-3");
+  let input = document.createElement("input");
+  setAttributes(input, {"type": "text", "class": "form-control", "id": "userInput", "placeholder": "Enter your name to save your score."});
   setScore.appendChild(input);
-  let group = document.createElement("div");
-  group.setAttribute("class", "input-group-prepend");
-  input.appendChild(group);
-  let label = document.createElement("input");
-  label.setAttribute("type", "text");
-  label.setAttribute("class", "form-control");
-  label.setAttribute("id", "userInput");
-  label.setAttribute("placeholder", "Enter your initials to save your score.");
-  label.setAttribute("aria-label", "Enter your initials to save your score.");
-  label.setAttribute("aria-describedby", "buttonId");
-  input.appendChild(label);
+  let inputGroup = document.createElement("div");
+  inputGroup.setAttribute("class", "input-group-append");
+  setScore.appendChild(inputGroup);
   let button = document.createElement("button");
-  button.setAttribute("class", "btn btn-outline-secondary");
-  button.setAttribute("type", "button");
-  button.setAttribute("id", "buttonId");
+  setAttributes(button, {"class": "btn btn-outline-secondary", "type": "button", "id": "buttonId"})
   button.innerText = "Submit"
-  group.appendChild(button);
+  inputGroup.appendChild(button);
+  //add event listener to button to submit user input
   document.getElementById("buttonId").addEventListener("click", function () {
-    let name = document.getElementById("userInput")
-    console.log(name.value);
-    showHighScore(name.value);
+    let name = document.getElementById("userInput").value;
+    showHighScore(name);
   });
 };
 
 const showHighScore = (name) => {
+  //clear the game play area
   gameplay.innerHTML = "";
-  let sessionScore = name + ": " + playerScore;
-  document.querySelector("#timer").innerHTML = sessionScore;
+  //display the players name and score in the jumbotron
+  document.querySelector("#timer").innerHTML = name + ": " + playerScore;
+  //add player score to highscore aray
   highScores.push({ "name": name, "score": playerScore });
   console.log(highScores);
+  //sort high score list from highest to lowest scores
   highScores.sort(function (a, b) {
     return b.score - a.score
   });
-  // let scoreBoard = document.createElement("div");
-  // scoreBoard.setAttribute("class", "row justify-content-center scoreboard");
-  // gameplay.parentNode.parentNode.appendChild(scoreBoard);
-  // if (highScores.length < topListNum) {
-  //   for (let i = 0; i < highScores.length; i++) {
-  //     scoreBoard.innerHTML +=
-  //     "<div class='col-6 text-right'>" +
-  //       "<h4>" + highScores[i].name + ":</h4>" +
-  //     "</div>" +
-  //     "<div class='col-6'>" +
-  //       "<h4>" + highScores[i].score + "</h4>" +
-  //     "</div>"
-  //   }
-  // } else {
-  //   for (let i = 0; i < topListNum; i++) {
-  //     scoreBoard.innerHTML +=
-  //     "<div class='col-6 text-right'>" +
-  //       "<h4>" + highScores[i].name + ":</h4>" +
-  //     "</div>" +
-  //     "<div class='col-6'>" +
-  //       "<h4>" + highScores[i].score + "</h4>" +
-  //     "</div>"
-  //   }
-  // };
+  //remove any score after 10 because we only want to store the top ten scores
+  highScores = highScores.slice(0, 10);
+  let scoreBoard = document.createElement("div");
+  scoreBoard.setAttribute("class", "scoreboard");
+  gameplay.appendChild(scoreBoard);
+  for (let i = 0; i < highScores.length; i++) {
+    scoreBoard.innerHTML+= "<h4>" + highScores[i].name + " : " + highScores[i].score + "</h4>";
+  }
   console.log(highScores);
   localStorage.setItem(quizSelected, JSON.stringify(highScores));
   pageLoad();

@@ -1,9 +1,11 @@
 body {
+	background-image: url("../images/marvel.jpg");
+	background-size: cover;
 	background-color: #504a4a;
 }
 
 .answer:hover {
-	background-color: #518cca;
+	background-color: steelblue;
 	color: #ffffff;
 }
 
@@ -23,35 +25,42 @@ body {
 }
 
 #question {
-	background-color: #f78f3f;
+	background-color: orange;
 	color: #ffffff;
+	text-shadow: 1px 1px #333333;
 }
 
 .sBtn {
-	background-color: #e23636;
+	background-color: crimson;
 	border: 3px solid #000000;
 	text-shadow: 2px 2px #333333;
 }
 
 .sBtn:hover {
-	background-color: #f78f3f;
+	background-color: orange;
 }
 
 .card {
-	border: solid 5px #e23636;
+	border: solid 5px crimson;
 }
 
 #buttonId {
-	background-color: #e23636;
+	background-color: crimson;
 	color: #ffffff;
 }
 
+.input-group {
+	margin: 20px;
+	border: 5px solid crimson;
+	border-radius: 5px;
+}
+
 .scoreboard {
-	/* background-color: #f78f3f; */
+	background-color: steelblue;
 	color: #ffffff;
 	text-shadow: 2px 2px #333333;
-	/* border: 5px solid #518cca; */
-	/* padding: 25px; */
+	border: 5px solid orange;
+	padding: 25px;
 }
 
 img {
