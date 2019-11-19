@@ -83,12 +83,14 @@ const maleSuperHeroes = [
     choices: ["Thor", "Hawkeye", "Gambit", "Wolverine"],
     answer: "Thor"
   }
-]
+];
 
 const gameplay = document.querySelector("#gameplay");
 
 let counter, playerScore, timer, intervalId, currentAnswer, array;
 let questionArray = [];
+let highScores = [];
+let storageScores = [];
 
 const pageLoad = () => {
   counter = 0;
@@ -141,6 +143,10 @@ const startGame = (array) => {
   } else if (array === "Male Heroes") {
     questionArray = questionArray.concat(maleSuperHeroes);
   }
+  storageScores = JSON.parse(localStorage.getItem(array));
+  console.log(storageScores);
+  highScores = storageScores;
+  console.log(highScores);
   shuffleArray(questionArray);
   gameplay.innerHTML = "";
   let qCard = document.createElement("div");
@@ -216,7 +222,7 @@ const loadQuestion = () => {
 
 const checkAnswer = (guess) => {
   counter++;
-if (guess === currentAnswer) {
+  if (guess === currentAnswer) {
     document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center correct");
     setTimeout(function () {
       document.querySelector(".jumbotron").setAttribute("class", "jumbotron text-center");
@@ -268,15 +274,28 @@ const endGame = () => {
   button.innerText = "Submit"
   group.appendChild(button);
   document.getElementById("buttonId").addEventListener("click", function () {
-    let initials = document.getElementById("userInput")
-    showHighScore(initials.value);
+    let name = document.getElementById("userInput")
+    console.log(name.value);
+    showHighScore(name.value);
   });
 };
 
-const showHighScore = (initials) => {
+const showHighScore = (name) => {
   gameplay.innerHTML = "";
-  let sessionScore = initials + ': ' + playerScore;
+  let sessionScore = playerScore + " - " + name;
   document.querySelector("#timer").innerHTML = sessionScore;
-  localStorage.setItem( array, sessionScore);
+  let obj = {};
+  obj
+  highScores.push({"score": playerScore, "name": name});
+  console.log(highScores);
+  highScores.sort(function (a, b) { return b - a });
+  console.log(highScores);
+  localStorage.setItem(array, JSON.stringify(highScores));
   pageLoad();
 };
+
+// var nietos = [];
+// var obj = {};
+// obj["01"] = nieto.label;
+// obj["02"] = nieto.value;
+// nietos.push(obj);
