@@ -244,14 +244,12 @@ const pageLoad = () => {
     button.innerText = quizArray[i].name;
     gameplay.appendChild(button);
   }
-  console.log(quizArray[0].quiz);
   //add click event to each button
   let btnEls = document.querySelectorAll(".sBtn")
   for (let i = 0; i < btnEls.length; i++) {
     let buttonEl = btnEls[i];
     buttonEl.addEventListener("click", function () {
       quizSelected = buttonEl.id;
-      console.log(quizSelected);
       //starts the game
       startGame(quizSelected);
     })
@@ -411,7 +409,6 @@ const showHighScore = (name) => {
   document.querySelector("#timer").innerHTML = name + ": " + playerScore;
   //add player score to highscore aray
   highScores.push({ "name": name, "score": playerScore });
-  console.log(highScores);
   //sort high score list from highest to lowest scores
   highScores.sort(function (a, b) {
     return b.score - a.score
@@ -424,7 +421,6 @@ const showHighScore = (name) => {
   for (let i = 0; i < highScores.length; i++) {
     scoreBoard.innerHTML+= "<h4>" + highScores[i].name + " : " + highScores[i].score + "</h4>";
   }
-  console.log(highScores);
   localStorage.setItem(quizSelected, JSON.stringify(highScores));
   pageLoad();
 };
