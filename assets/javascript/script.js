@@ -315,7 +315,7 @@ const decrement = () => {
   timer--;
   clock.innerHTML = timer;
   //if the timer runs out stop the clock and end game
-  if (timer === 0) {
+  if (timer <= 0) {
     stopTimer();
     endGame();
   }
