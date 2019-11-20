@@ -179,7 +179,7 @@ const spiderVillains = [
     answer: "Lizard"
   }
 ];
-const spiderPeople = [
+const webWarriors = [
   {
     question: "Who is Peter Parker?",
     choices: ["Spider-Man", "Spider-Ham", "Spider-Woman", "Sp//dr"],
@@ -240,9 +240,9 @@ const quizArray = [
     id: "spiderVillains",
     quiz: spiderVillains
   }, {
-    name: "Spider People",
-    id: "spiderPeople",
-    quiz: spiderPeople
+    name: "Web Warriors",
+    id: "webWarriors",
+    quiz: webWarriors
   }
 ];
 
