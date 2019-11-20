@@ -179,6 +179,49 @@ const spiderVillains = [
     answer: "Lizard"
   }
 ];
+const spiderPeople = [
+  {
+    question: "Who is Peter Parker?",
+    choices: ["Spider-Man", "Spider-Ham", "Spider-Woman", "Sp//dr"],
+    answer: "Spider-Man"
+  }, {
+    question: "Who is Otto Octavius?",
+    choices: ["Superior Spider-Man", "Spider-Man", "Spider-Ham", "Spider-Woman"],
+    answer: "Superior Spider-Man"
+  }, {
+    question: "Who is Benjamin Reilly?",
+    choices: ["Scarlet Spider", "Superior Spider-Man", "Spider-Man", "Spider-Ham"],
+    answer: "Scarlet Spider"
+  }, {
+    question: "Who is Hobert Brown?",
+    choices: ["Spider Punk", "Scarlet Spider", "Superior Spider-Man", "Spider-Man"],
+    answer: "Spider Punk"
+  }, {
+    question: "Who is Billy Braddock?",
+    choices: ["Spider-UK", "Spider Punk", "Scarlet Spider", "Superior Spider-Man"],
+    answer: "Spider-UK"
+  }, {
+    question: "Who is Anya Sofía Corazón?",
+    choices: ["Spider-Girl", "Spider-UK", "Spider Punk", "Scarlet Spider"],
+    answer: "Spider-Girl"
+  }, {
+    question: "Who is Gwen Stacey?",
+    choices: ["Ghost Spider", "Spider-Girl", "Spider-UK", "Spider Punk"],
+    answer: "Ghost Spider"
+  }, {
+    question: "Who is Peni Parker?",
+    choices: ["Sp//dr", "Ghost Spider", "Spider-Girl", "Spider-UK"],
+    answer: "Sp//dr"
+  }, {
+    question: "Who is Jessica Drew?",
+    choices: ["Spider-Woman", "Sp//dr", "Ghost Spider", "Spider-Girl"],
+    answer: "Spider-Woman"
+  }, {
+    question: "Who is Peter Porker?",
+    choices: ["Spider-Ham", "Spider-Woman", "Sp//dr", "Ghost Spider"],
+    answer: "Spider-Ham"
+  }
+]
 const quizArray = [
   {
     name: "Female Heroes",
@@ -196,6 +239,10 @@ const quizArray = [
     name: "Spidey Villains",
     id: "spiderVillains",
     quiz: spiderVillains
+  }, {
+    name: "Spider People",
+    id: "spiderPeople",
+    quiz: spiderPeople
   }
 ];
 
@@ -259,6 +306,7 @@ const pageLoad = () => {
 pageLoad();
 
 const startGame = (quizSelected) => {
+  highScores = [];
   const result = quizArray.find( ({id}) => id === quizSelected );
   questionArray = result.quiz;
   //take string from local storage and convert it to JSON object
